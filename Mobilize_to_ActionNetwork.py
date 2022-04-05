@@ -36,7 +36,7 @@ loglist=[]
 # --------------------------------------------------------------------------------------------------
 # Get mobilize records we need to sync from data warehouse
 # --------------------------------------------------------------------------------------------------
-sql_query = 'select * from cormac_scratch.mobilize_users_to_sync limit 5;'
+sql_query = 'select * from mobilize_schema.mobilize_users_to_sync limit 5;'
 new_mobilize_users = my_rs_warehouse.query(sql_query)
 
 # Logging can help you understand what stage the script is in and debug the script if it fails
@@ -123,5 +123,5 @@ if new_mobilize_users.num_rows > 0:
     logger.info(f'''Successfully synced {success_count} mobilize users 
 and failed to sync {errors_count}''')
 
-    my_rs_warehouse.copy(tbl=logtable, table_name='cormac_scratch.mobilize_to_actionnetwork_log',
+    my_rs_warehouse.copy(tbl=logtable, table_name='mobilize_schema.mobilize_to_actionnetwork_log',
                          if_exists='append', alter_table=True)
